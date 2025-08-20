@@ -814,7 +814,7 @@ export const SettingsPanel: React.FC = () => {
 
         {/* Backup Reminder Settings - Admin Only */}
         {user?.role === 'admin' && (
-          <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 lg:col-span-1">
+          <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center space-x-2">
               <Bell className="w-5 h-5" />
               <span>Backup Reminders</span>

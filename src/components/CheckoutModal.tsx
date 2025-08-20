@@ -309,6 +309,109 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           </button>
         </div>
       </div>
+
+      {/* QR Code Modal */}
+      {showQRCode && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60 p-2 sm:p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md">
+            <div className="p-4 sm:p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-2">
+                  <QrCode className="w-5 h-5 text-purple-600" />
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900">QR Code Payment</h3>
+                </div>
+                <button
+                  onClick={() => {
+                    setShowQRCode(false);
+                    setQrCodeDataURL('');
+                  }}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="text-center space-y-4">
+                {/* QR Code */}
+                <div className="flex justify-center">
+                  <div className="p-4 bg-white border-2 border-gray-200 rounded-xl">
+                    <img 
+                      src={qrCodeDataURL} 
+                      alt="Payment QR Code" 
+                      className="w-48 h-48 sm:w-56 sm:h-56"
+                    />
+                {/* Payment Details */}
+                <div className="bg-gray-50 rounded-lg p-4 text-left">
+                  <h4 className="font-medium text-gray-900 mb-3">Payment Details</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Account Number:</span>
+                      <span className="font-mono font-medium">{settings.qr_payment_account}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Recipient:</span>
+                      <span className="font-medium">{settings.qr_payment_recipient}</span>
+                    </div>
+                    {settings.qr_payment_bank && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Bank:</span>
+                        <span className="font-medium">{settings.qr_payment_bank}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between border-t pt-2 mt-2">
+                      <span className="text-gray-600">Amount:</span>
+                      <span className="font-bold text-lg" style={{ color: settings.primary_color }}>
+                        {settings.currency_symbol}{finalTotal.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Reference:</span>
+                      <span className="font-mono text-xs">POS-{Date.now()}</span>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                {/* Instructions */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <div className="text-sm text-blue-800">
+                    <p className="font-medium mb-1">Instructions:</p>
+                    <ol className="list-decimal list-inside space-y-1 text-left">
+                      <li>Scan this QR code with your banking app</li>
+                      <li>Verify the payment details</li>
+                      <li>Complete the transfer</li>
+                      <li>Show confirmation to cashier</li>
+                    </ol>
+                  </div>
+                </div>
+                </div>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => {
+                      setShowQRCode(false);
+                      setQrCodeDataURL('');
+                    }}
+                    className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Copy payment details to clipboard
+                      const paymentText = `Payment Details:\nAccount: ${settings.qr_payment_account}\nRecipient: ${settings.qr_payment_recipient}${settings.qr_payment_bank ? `\nBank: ${settings.qr_payment_bank}` : ''}\nAmount: ${settings.currency_symbol}${finalTotal.toFixed(2)}`;
+                      navigator.clipboard.writeText(paymentText).then(() => {
+                        alert('Payment details copied to clipboard!');
+                      });
+                    }}
+                    className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all"
+                  >
+                    Copy Details
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
