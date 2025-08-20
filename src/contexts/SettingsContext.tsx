@@ -12,6 +12,10 @@ const defaultSettings: Settings = {
   primary_color: '#3B82F6',
   currency: 'USD',
   currency_symbol: '$',
+  qr_payment_enabled: false,
+  qr_payment_account: '',
+  qr_payment_recipient: '',
+  qr_payment_bank: '',
   updated_at: new Date().toISOString()
 };
 

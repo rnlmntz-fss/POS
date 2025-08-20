@@ -59,6 +59,10 @@ export interface Settings {
   primary_color: string;
   currency: string;
   currency_symbol: string;
+  qr_payment_enabled?: boolean;
+  qr_payment_account?: string;
+  qr_payment_recipient?: string;
+  qr_payment_bank?: string;
   updated_at: string;
 }
 

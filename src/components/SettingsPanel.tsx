@@ -116,6 +116,10 @@ export const SettingsPanel: React.FC = () => {
       primary_color: primaryColor,
       currency,
       currency_symbol: currencySymbol,
+      qr_payment_enabled: qrPaymentEnabled,
+      qr_payment_account: qrPaymentAccount,
+      qr_payment_recipient: qrPaymentRecipient,
+      qr_payment_bank: qrPaymentBank,
     });
     
     // Save reminder settings
